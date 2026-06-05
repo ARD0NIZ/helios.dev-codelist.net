@@ -1,502 +1,63 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Helios Global Chat - Cross-Server Messaging</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@400;600;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #0f172a;
-            --accent: #3b82f6;
-            --accent-alt: #06b6d4;
-            --accent-hot: #f43f5e;
-            --text-light: #f8fafc;
-            --text-dim: #cbd5e1;
-            --border: #1e293b;
-            --surface: #0f172a;
-            --surface-alt: #1a202c;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--primary) 0%, #0d1117 100%);
-            color: var(--text-light);
-            font-family: 'Space Grotesk', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* Animated background grid */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            pointer-events: none;
-            z-index: 1;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .content {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Header & Navigation */
-        header {
-            padding: 2rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-        }
-
-        nav a {
-            color: var(--text-dim);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--accent);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 6rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.1), transparent);
-            border-radius: 50%;
-            animation: float 10s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, -30px); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            font-family: 'Syne', sans-serif;
-            letter-spacing: -1px;
-            animation: slideDown 0.8s ease-out;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 50%, var(--accent-hot) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-dim);
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-            animation: slideUp 0.8s ease-out 0.1s backwards;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* CTA Buttons */
-        .cta-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: slideUp 0.8s ease-out 0.2s backwards;
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
-            color: white;
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 30px 60px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--accent);
-            border: 2px solid var(--accent);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(59, 130, 246, 0.1);
-            transform: translateY(-3px);
-        }
-
-        /* Network Visualization */
-        .network-section {
-            padding: 6rem 2rem;
-            position: relative;
-        }
-
-        .network-viz {
-            max-width: 900px;
-            margin: 0 auto;
-            aspect-ratio: 16/9;
-            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.05), transparent);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .server-node {
-            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        .server-node:nth-child(2) {
-            animation-delay: 0.5s;
-        }
-
-        .server-node:nth-child(3) {
-            animation-delay: 1s;
-        }
-
-        @keyframes pulse {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4)); }
-            50% { filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.7)); }
-        }
-
-        /* Feature Cards */
-        .features {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 4rem;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-        }
-
-        .section-title span {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .feature-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
-        }
-
-        .feature-card:hover::before {
-            left: 100%;
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-            font-family: 'Syne', sans-serif;
-        }
-
-        .feature-card p {
-            color: var(--text-dim);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* Stats Section */
-        .stats {
-            padding: 4rem 2rem;
-            background: rgba(59, 130, 246, 0.05);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            margin: 6rem 0;
-        }
-
-        .stats-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat {
-            animation: slideUp 0.8s ease-out backwards;
-        }
-
-        .stat:nth-child(2) { animation-delay: 0.1s; }
-        .stat:nth-child(3) { animation-delay: 0.2s; }
-        .stat:nth-child(4) { animation-delay: 0.3s; }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            color: var(--text-dim);
-            margin-top: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        /* Commands Section */
-        .commands {
-            padding: 6rem 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .command-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            gap: 2rem;
-            align-items: center;
-            transition: all 0.3s;
-        }
-
-        .command-card:hover {
-            border-color: var(--accent);
-            background: rgba(30, 41, 59, 0.7);
-        }
-
-        .command-name {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-alt) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .command-desc {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        /* Footer */
-        footer {
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            background: rgba(15, 23, 42, 0.5);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-
-        .footer-text {
-            color: var(--text-dim);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .cta-group {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            nav {
-                display: none;
-            }
-
-            .command-card {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-        }
-
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <!-- Open Graph / Discord / WhatsApp / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Helios Global Chat - Cross-Server Messaging">
+    <meta property="og:description"
+        content="Connect your Discord communities globally. Real-time cross-server messaging that brings communities together. One message, infinite reach.">
+    <meta property="og:image" content="icon.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Helios Global Chat">
+    <meta property="og:url" content="https://helios.dev-codelist.net">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Helios Global Chat - Cross-Server Messaging">
+    <meta name="twitter:description"
+        content="Connect your Discord communities globally. Real-time cross-server messaging that brings communities together. One message, infinite reach.">
+    <meta name="twitter:image" content="icon.png">
+    <meta name="twitter:creator" content="@helios_bot">
+    <meta name="twitter:site" content="@helios_bot">
+
+    <!-- Theme & App Colors -->
+    <meta name="theme-color" content="#26f4df">
+    <meta name="msapplication-TileColor" content="#26f4df">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+
+    <!-- General Meta Tags -->
+    <meta name="description"
+        content="Connect your Discord communities globally with Helios Global Chat. Real-time cross-server messaging, network statistics, and more.">
+    <meta name="keywords" content="Discord, Bot, Global Chat, Cross-Server, Community, Messaging">
+    <meta name="author" content="Helios">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Discord Bot Specific -->
+    <meta property="discord:site_name" content="Helios">
+    <meta property="discord:description" content="Global Chat Network for Discord">
+
+    <!-- Apple Specific -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Helios Chat">
+
+    <!-- Additional SEO -->
+    <meta name="image" content="icon.png">
+    <meta name="canonical" content="https://helios.dev-codelist.net">
+    <meta property="article:author" content="Helios Team">
 </head>
+
 <body>
     <div class="bg-grid"></div>
     <div class="content">
@@ -514,10 +75,12 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>Connect Your <span>Communities</span> Globally</h1>
-                <p>Cross-server messaging that brings Discord communities together in real time. One message, infinite reach.</p>
+                <p>Cross-server messaging that brings Discord communities together in real time. One message, infinite
+                    reach.</p>
                 <div class="cta-group">
-                    <a href="#" class="btn btn-primary">🚀 Invite Helios</a>
-                    <a href="#" class="btn btn-secondary">Join Community</a>
+                    <a href="https://discord.com/oauth2/authorize?client_id=1041755897099210783"
+                        class="btn btn-primary">🚀 Invite Helios</a>
+                    <a href="https://discord.gg/5dGWwdHa3e" class="btn btn-secondary">Join Community</a>
                 </div>
             </div>
         </section>
@@ -526,46 +89,93 @@
         <section class="network-section" id="network">
             <h2 class="section-title">A <span>Global Network</span> of Servers</h2>
             <div class="network-viz">
-                <svg viewBox="0 0 900 500" preserveAspectRatio="xMidYMid meet">
-                    <!-- Connection lines -->
-                    <line x1="150" y1="250" x2="450" y2="150" stroke="rgba(59,130,246,0.3)" stroke-width="2" stroke-dasharray="5,5">
-                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="20s" repeatCount="indefinite" />
-                    </line>
-                    <line x1="150" y1="250" x2="450" y2="350" stroke="rgba(6,182,212,0.3)" stroke-width="2" stroke-dasharray="5,5">
-                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="20s" repeatCount="indefinite" />
-                    </line>
-                    <line x1="750" y1="250" x2="450" y2="150" stroke="rgba(244,63,94,0.3)" stroke-width="2" stroke-dasharray="5,5">
-                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="20s" repeatCount="indefinite" />
-                    </line>
-                    <line x1="750" y1="250" x2="450" y2="350" stroke="rgba(59,130,246,0.3)" stroke-width="2" stroke-dasharray="5,5">
-                        <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="20s" repeatCount="indefinite" />
+                <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+                    <!-- Datenfluss Pfeile -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="rgba(38,244,223,0.6)" />
+                        </marker>
+                        <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:rgba(38,244,223,0.4);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgba(0,255,163,0.4);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Flow Line mit Animation -->
+                    <line x1="100" y1="250" x2="900" y2="250" stroke="url(#flowGradient)" stroke-width="3"
+                        stroke-dasharray="10,5" marker-end="url(#arrowhead)">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-15" dur="2s"
+                            repeatCount="indefinite" />
                     </line>
 
-                    <!-- Central node -->
+                    <!-- 1. User Input Node -->
                     <g class="server-node">
-                        <circle cx="450" cy="150" r="40" fill="rgba(59,130,246,0.8)" />
-                        <circle cx="450" cy="150" r="35" fill="none" stroke="rgba(59,130,246,0.4)" stroke-width="2" />
-                        <text x="450" y="160" text-anchor="middle" fill="white" font-size="24" font-weight="bold">⚡</text>
+                        <circle cx="100" cy="250" r="50" fill="rgba(38,244,223,0.85)" />
+                        <circle cx="100" cy="250" r="45" fill="none" stroke="rgba(38,244,223,0.4)" stroke-width="2" />
+                        <text x="100" y="270" text-anchor="middle" fill="#0a0e27" font-size="36"
+                            font-weight="bold">👤</text>
                     </g>
+                    <text x="100" y="320" text-anchor="middle" fill="#26f4df" font-size="13" font-weight="600">User
+                        Input</text>
 
+                    <!-- 2. Verarbeitung Node -->
                     <g class="server-node">
-                        <circle cx="450" cy="350" r="40" fill="rgba(6,182,212,0.8)" />
-                        <circle cx="450" cy="350" r="35" fill="none" stroke="rgba(6,182,212,0.4)" stroke-width="2" />
-                        <text x="450" y="360" text-anchor="middle" fill="white" font-size="24" font-weight="bold">⚡</text>
+                        <circle cx="300" cy="250" r="50" fill="rgba(38,244,223,0.8)" />
+                        <circle cx="300" cy="250" r="45" fill="none" stroke="rgba(38,244,223,0.4)" stroke-width="2" />
+                        <text x="300" y="270" text-anchor="middle" fill="#0a0e27" font-size="36"
+                            font-weight="bold">⚙️</text>
                     </g>
+                    <text x="300" y="320" text-anchor="middle" fill="#26f4df" font-size="13"
+                        font-weight="600">Processing</text>
 
-                    <!-- Side nodes -->
+                    <!-- 3. Datenbank Node -->
                     <g class="server-node">
-                        <circle cx="150" cy="250" r="45" fill="rgba(59,130,246,0.7)" />
-                        <circle cx="150" cy="250" r="40" fill="none" stroke="rgba(59,130,246,0.4)" stroke-width="2" />
-                        <text x="150" y="262" text-anchor="middle" fill="white" font-size="28" font-weight="bold">🎮</text>
+                        <circle cx="500" cy="250" r="50" fill="rgba(0,255,163,0.8)" />
+                        <circle cx="500" cy="250" r="45" fill="none" stroke="rgba(0,255,163,0.4)" stroke-width="2" />
+                        <text x="500" y="270" text-anchor="middle" fill="#0a0e27" font-size="36"
+                            font-weight="bold">💾</text>
                     </g>
+                    <text x="500" y="320" text-anchor="middle" fill="#00ffa3" font-size="13"
+                        font-weight="600">Database</text>
 
+                    <!-- 4. Sendungsverarbeitung Node -->
                     <g class="server-node">
-                        <circle cx="750" cy="250" r="45" fill="rgba(244,63,94,0.7)" />
-                        <circle cx="750" cy="250" r="40" fill="none" stroke="rgba(244,63,94,0.4)" stroke-width="2" />
-                        <text x="750" y="262" text-anchor="middle" fill="white" font-size="28" font-weight="bold">💬</text>
+                        <circle cx="700" cy="250" r="50" fill="rgba(29,217,196,0.8)" />
+                        <circle cx="700" cy="250" r="45" fill="none" stroke="rgba(29,217,196,0.4)" stroke-width="2" />
+                        <text x="700" y="270" text-anchor="middle" fill="#0a0e27" font-size="36"
+                            font-weight="bold">📤</text>
                     </g>
+                    <text x="700" y="320" text-anchor="middle" fill="#1dd9c4" font-size="13"
+                        font-weight="600">Send Processing</text>
+
+                    <!-- 5. Chat Output Node -->
+                    <g class="server-node">
+                        <circle cx="900" cy="250" r="50" fill="rgba(38,244,223,0.85)" />
+                        <circle cx="900" cy="250" r="45" fill="none" stroke="rgba(38,244,223,0.4)" stroke-width="2" />
+                        <text x="900" y="270" text-anchor="middle" fill="#0a0e27" font-size="36"
+                            font-weight="bold">💬</text>
+                    </g>
+                    <text x="900" y="320" text-anchor="middle" fill="#26f4df" font-size="13" font-weight="600">Global
+                        Chat</text>
+
+                    <!-- Pulse Effekt auf alle Nodes -->
+                    <style>
+                        @keyframes nodePulse {
+
+                            0%,
+                            100% {
+                                opacity: 1;
+                            }
+
+                            50% {
+                                opacity: 0.7;
+                            }
+                        }
+
+                        circle[fill*="rgba"] {
+                            animation: nodePulse 3s ease-in-out infinite;
+                        }
+                    </style>
                 </svg>
             </div>
         </section>
@@ -577,12 +187,14 @@
                 <div class="feature-card">
                     <div class="feature-icon">🌍</div>
                     <h3>Global Broadcasting</h3>
-                    <p>Send messages to all connected servers simultaneously. Reach your entire community network with one message.</p>
+                    <p>Send messages to all connected servers simultaneously. Reach your entire community network with
+                        one message.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">⚙️</div>
                     <h3>Full Customization</h3>
-                    <p>Configure which channels participate, set notification preferences, and control your server's visibility.</p>
+                    <p>Configure which channels participate, set notification preferences, and control your server's
+                        visibility.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
@@ -592,12 +204,14 @@
                 <div class="feature-card">
                     <div class="feature-icon">👤</div>
                     <h3>User Profiles</h3>
-                    <p>View detailed Global Chat profiles. Track reputation and activity across the connected community.</p>
+                    <p>View detailed Global Chat profiles. Track reputation and activity across the connected community.
+                    </p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔒</div>
                     <h3>Safe & Moderated</h3>
-                    <p>Built with security first. All messages are logged and moderated to maintain community standards.</p>
+                    <p>Built with security first. All messages are logged and moderated to maintain community standards.
+                    </p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
@@ -611,15 +225,15 @@
         <section class="stats">
             <div class="stats-container">
                 <div class="stat">
-                    <div class="stat-number">500+</div>
+                    <div class="stat-number">8+</div>
                     <div class="stat-label">Connected Servers</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-number">50K+</div>
-                    <div class="stat-label">Active Users</div>
+                    <div class="stat-number">3,7K+</div>
+                    <div class="stat-label">Users</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-number">1M+</div>
+                    <div class="stat-number">1,9K+</div>
                     <div class="stat-label">Messages Bridged</div>
                 </div>
                 <div class="stat">
@@ -632,77 +246,50 @@
         <!-- Commands -->
         <section class="commands" id="commands">
             <h2 class="section-title">Quick <span>Commands</span></h2>
-            
+
             <div class="command-card">
                 <div class="command-name">/gc config</div>
-                <div class="command-desc">Enable, disable & configure Global Chat features. Set which channels participate in the global network and customize behavior to match your server.</div>
+                <div class="command-desc">Enable, disable & configure Global Chat features. Set which channel
+                    participate in the global network to match your server.</div>
             </div>
 
             <div class="command-card">
                 <div class="command-name">/gc setup</div>
-                <div class="command-desc">Manage your personal Global Chat settings. Control notifications, visibility, and how you appear to other users on the network.</div>
+                <div class="command-desc">Manage your personal Global Chat settings. Control notifications.</div>
             </div>
 
             <div class="command-card">
                 <div class="command-name">/gc stats</div>
-                <div class="command-desc">View comprehensive Global Chat network statistics. See server counts, active users, message volume, and your personal contribution.</div>
+                <div class="command-desc">View comprehensive Global Chat network statistics. See server counts, active
+                    users, message volume, and contribution.</div>
             </div>
 
             <div class="command-card">
                 <div class="command-name">/gc profile</div>
-                <div class="command-desc">View a user's Global Chat profile card. Check reputation, activity level, and contribution history across the entire network.</div>
+                <div class="command-desc">View a user's Global Chat profile card. Check reputation, activity , and
+                    contribution history across the entire network.</div>
+            </div>
+
+            <div class="command-card">
+                <div class="command-name">/help</div>
+                <div class="command-desc">To explore the rest of the Bot.</div>
             </div>
         </section>
 
         <!-- Footer -->
         <footer>
             <div class="footer-links">
-                <a href="#">🤖 Invite Bot</a>
-                <a href="#">💬 Community</a>
-                <a href="#">📚 Documentation</a>
-                <a href="#">🐛 Support</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=1041755897099210783">🤖 Invite Bot</a>
+                <a href="https://discord.gg/5dGWwdHa3e">💬 Community</a>
+                <!--<a href="#">📚 Documentation</a>-->
+                <a href="https://discord.gg/5dGWwdHa3e">🐛 Support</a>
             </div>
             <div class="footer-text">
-                <p>Helios Global Chat © 2024 • Connecting communities, one message at a time</p>
+                <p>Helios Global Chat © <span id="data-year"></span> • Connecting communities, one message at a time</p>
             </div>
         </footer>
     </div>
-
-    <script>
-        // Intersection Observer für Scroll-Animationen
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Beobachte alle Feature Cards
-        document.querySelectorAll('.feature-card').forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
-            observer.observe(card);
-        });
-
-        // Smooth scroll für Links
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                const href = link.getAttribute('href');
-                if (href !== '#') {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
+
 </html>
