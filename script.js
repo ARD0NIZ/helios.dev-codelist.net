@@ -34,3 +34,21 @@
         });
         
         document.getElementById('data-year').textContent = new Date().getFullYear();
+
+async function loadStats() {
+    try {
+        const res = await fetch('http://api.helios.dev-codelist.net:27765/stats');
+        alert('Status: ' + res.status);
+        const data = await res.json();
+        alert('Data: ' + JSON.stringify(data));
+
+        document.getElementById('stat-servers').textContent = data.guilds + '+';
+        document.getElementById('stat-users').textContent = (data.users / 1000).toFixed(1) + 'K+';
+    } catch (error) {
+        alert('Error: ' + error.message);
+        document.getElementById('stat-servers').textContent = 'error';
+        document.getElementById('stat-users').textContent = 'error';
+    }
+}
+
+loadStats();
