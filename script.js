@@ -35,6 +35,7 @@
         
         document.getElementById('data-year').textContent = new Date().getFullYear();
 
+// Stats von API fetchen
 async function loadStats() {
     try {
         const res = await fetch('https://api.notlucas.tech/stats');
