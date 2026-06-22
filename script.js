@@ -38,7 +38,7 @@
 // Stats von API fetchen
 async function loadStats() {
     try {
-        const res = await fetch('https://api.notlucas.tech/globalchat');
+        const res = await fetch('https://api.notlucas.tech/stats');
         const data = await res.json();
 
         document.getElementById('stat-servers').textContent = data.activeServers + '+';
