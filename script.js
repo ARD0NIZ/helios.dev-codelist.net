@@ -37,7 +37,7 @@
 
 async function loadStats() {
     try {
-        const res = await fetch('http://api.helios.dev-codelist.net:27765/stats');
+        const res = await fetch('https://api.api.notlucas.tech/stats');
         alert('Status: ' + res.status);
         const data = await res.json();
         alert('Data: ' + JSON.stringify(data));
