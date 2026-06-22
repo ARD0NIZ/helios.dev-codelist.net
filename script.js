@@ -37,7 +37,7 @@
 
 async function loadStats() {
     try {
-        const res = await fetch('https://api.api.notlucas.tech/stats');
+        const res = await fetch('https://api.notlucas.tech/stats');
         alert('Status: ' + res.status);
         const data = await res.json();
         alert('Data: ' + JSON.stringify(data));
