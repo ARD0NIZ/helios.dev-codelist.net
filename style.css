@@ -18,6 +18,13 @@
     --surface-alt: #141b2f;
 }
 
+/* ===== OVERFLOW FIX ===== */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -26,7 +33,6 @@ body {
     background: linear-gradient(135deg, var(--primary) 0%, #0d1117 100%);
     color: var(--text-light);
     font-family: 'Space Grotesk', sans-serif;
-    overflow-x: hidden;
 }
 
 /* Animated background grid */
@@ -43,6 +49,7 @@ body {
     pointer-events: none;
     z-index: 1;
     animation: gridMove 20s linear infinite;
+    overflow: hidden;
 }
 
 @keyframes gridMove {
@@ -53,6 +60,9 @@ body {
 .content {
     position: relative;
     z-index: 2;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Header & Navigation */
@@ -66,6 +76,8 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
+    width: 100%;
+    max-width: 100%;
 }
 
 .logo {
@@ -96,6 +108,8 @@ nav a:hover {
     text-align: center;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 .hero::before {
@@ -108,6 +122,7 @@ nav a:hover {
     background: radial-gradient(circle, rgba(38, 244, 223, 0.2), transparent);
     border-radius: 50%;
     animation: float 8s ease-in-out infinite;
+    pointer-events: none;
 }
 
 .hero::after {
@@ -120,6 +135,7 @@ nav a:hover {
     background: radial-gradient(circle, rgba(0, 255, 163, 0.15), transparent);
     border-radius: 50%;
     animation: float 10s ease-in-out infinite reverse;
+    pointer-events: none;
 }
 
 @keyframes float {
@@ -218,6 +234,9 @@ nav a:hover {
 .network-section {
     padding: 6rem 2rem;
     position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .network-viz {
@@ -259,6 +278,9 @@ svg {
     padding: 6rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .section-title {
@@ -338,6 +360,9 @@ svg {
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     margin: 6rem 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .stats-container {
@@ -377,6 +402,9 @@ svg {
     padding: 6rem 2rem;
     max-width: 1000px;
     margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .command-card {
@@ -420,6 +448,9 @@ footer {
     border-top: 1px solid var(--border);
     text-align: center;
     background: rgba(15, 23, 42, 0.5);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .footer-links {
@@ -509,6 +540,12 @@ footer {
     .hero p {
         font-size: 1rem;
         margin-bottom: 1.5rem;
+    }
+
+    .hero::before,
+    .hero::after {
+        width: 400px;
+        height: 400px;
     }
 
     .cta-group {
@@ -625,8 +662,8 @@ footer {
 
     .hero::before,
     .hero::after {
-        width: 300px;
-        height: 300px;
+        width: 250px;
+        height: 250px;
     }
 
     .hero p {
