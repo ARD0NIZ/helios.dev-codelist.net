@@ -44,12 +44,10 @@ async function loadStats() {
         document.getElementById('stat-servers').textContent = data.activeServers + '+';
         document.getElementById('stat-users').textContent = (data.users / 1000).toFixed(1) + 'K+';
         document.getElementById('stat-messages').textContent = (data.messages / 1000).toFixed(1) + 'K+';
-        document.getElementById('stat-banned').textContent = data.bannedUsers;
     } catch (error) {
         document.getElementById('stat-servers').textContent = 'error';
         document.getElementById('stat-users').textContent = 'error';
         document.getElementById('stat-messages').textContent = 'error';
-        document.getElementById('stat-banned').textContent = 'error';
         console.error('Stats konnten nicht geladen werden:', error);
     }
 }
