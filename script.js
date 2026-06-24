@@ -42,12 +42,12 @@ async function loadStats() {
         const data = await res.json();
 
         document.getElementById('stat-online').textContent = data.online ? 'online' : 'offline';
-        document.getElementById('stat-servers').textContent = data.activeServers + '+';
+        document.getElementById('stat-servers').textContent = data.activeServers;
         document.getElementById('stat-guilds').textContent = data.guilds + '+';
-        document.getElementById('stat-users').textContent = (data.users / 1000).toFixed(1) + 'K+';
-        document.getElementById('stat-messages').textContent = (data.messages / 1000).toFixed(1) + 'K+';
+        document.getElementById('stat-users').textContent = (data.users / 1000).toFixed(1);
+        document.getElementById('stat-messages').textContent = (data.messages / 1000).toFixed(1);
         document.getElementById('stat-uptime').textContent = data.uptime;
-        document.getElementById('stat-commands').textContent = data.commands + '+';
+        document.getElementById('stat-commands').textContent = data.commands;
     } catch (error) {
         document.getElementById('stat-online').textContent = 'error';
         document.getElementById('stat-servers').textContent = 'error';
