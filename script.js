@@ -43,7 +43,7 @@ async function loadStats() {
 
         document.getElementById('stat-online').textContent = data.online ? 'online' : 'offline';
         document.getElementById('stat-servers').textContent = data.activeServers;
-        document.getElementById('stat-guilds').textContent = data.guilds + '+';
+        document.getElementById('stat-guilds').textContent = data.guilds;
         document.getElementById('stat-users').textContent = (data.users / 1000).toFixed(1);
         document.getElementById('stat-messages').textContent = (data.messages / 1000).toFixed(1);
         document.getElementById('stat-uptime').textContent = data.uptime;
