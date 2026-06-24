@@ -41,7 +41,7 @@ async function loadStats() {
         const res = await fetch('https://api.notlucas.tech/stats');
         const data = await res.json();
 
-        document.getElementById('stat-online').textContent = data.online;
+        document.getElementById('stat-online').textContent = data.online ? 'online' : 'offline';
         document.getElementById('stat-servers').textContent = data.activeServers + '+';
         document.getElementById('stat-guilds').textContent = data.guilds + '+';
         document.getElementById('stat-users').textContent = (data.users / 1000).toFixed(1) + 'K+';
@@ -49,7 +49,7 @@ async function loadStats() {
         document.getElementById('stat-uptime').textContent = data.uptime;
         document.getElementById('stat-commands').textContent = data.commands + '+';
     } catch (error) {
-        document.getElementById('stat-online').textContent = 'offline';
+        document.getElementById('stat-online').textContent = 'error';
         document.getElementById('stat-servers').textContent = 'error';
         document.getElementById('stat-guilds').textContent = 'error';
         document.getElementById('stat-users').textContent = 'error';
