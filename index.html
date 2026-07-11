@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Helios Global Chat - Cross-Server Messaging</title>
     <link rel="icon" type="image/png" href="icon.png">
-    <link rel="stylesheet" href="style.css">
     <link rel="apple-touch-icon" href="icon.png">
+    <link rel="stylesheet" href="style.css">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Helios Global Chat - Cross-Server Messaging">
@@ -17,52 +17,51 @@
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Helios Global Chat">
     <meta property="og:url" content="https://helios.dev-codelist.net">
-
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Helios Global Chat - Cross-Server Messaging">
-    <meta name="twitter:description" content="Connect your Discord communities globally. Real-time cross-server messaging that brings communities together. One message, infinite reach.">
+    <meta name="twitter:description" content="Connect your Discord communities globally. Real-time cross-server messaging that brings communities together.">
     <meta name="twitter:image" content="icon.png">
-    <meta name="twitter:creator" content="@helios_bot">
-    <meta name="twitter:site" content="@helios_bot">
-
     <meta name="theme-color" content="#26f4df">
-    <meta name="msapplication-TileColor" content="#26f4df">
     <meta name="description" content="Connect your Discord communities globally with Helios Global Chat. Real-time cross-server messaging, network statistics, and more.">
     <meta name="keywords" content="Discord, Bot, Global Chat, Cross-Server, Community, Messaging">
     <meta name="author" content="Helios">
     <meta name="robots" content="index, follow">
     <meta name="language" content="en">
     <meta name="revisit-after" content="7 days">
-    <meta property="discord:site_name" content="Helios">
-    <meta property="discord:description" content="Global Chat Network for Discord">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Helios Chat">
-    <meta name="image" content="icon.png">
     <meta name="canonical" content="https://helios.dev-codelist.net">
-    <meta property="article:author" content="Helios Team">
 </head>
 
 <body>
     <div class="bg-grid"></div>
     <div class="content">
+
         <!-- Header -->
         <header>
-            <div class="logo">⚡ HELIOS</div>
-            <nav>
+            <a href="/" class="logo-link">
+                <img src="icon.png" alt="Helios Logo" class="logo-img">
+                <span class="logo-text">HELIOS</span>
+            </a>
+            <nav id="main-nav">
                 <a href="#features">Features</a>
                 <a href="#commands">Commands</a>
                 <a href="#network">Network</a>
             </nav>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
         </header>
 
         <!-- Hero -->
         <section class="hero">
+            <div class="hero-logo-bg"><img src="icon.svg" alt="" aria-hidden="true"></div>
             <div class="hero-content">
                 <h1>Connect Your <span>Communities</span> Globally</h1>
                 <p>Cross-server messaging that brings Discord communities together in real time. One message, infinite reach.</p>
                 <div class="cta-group">
-                    <a href="https://discord.com/oauth2/authorize?client_id=1041755897099210783" class="btn btn-primary">🚀 Invite Helios</a>
+                    <a href="https://discord.com/oauth2/authorize?client_id=1041755897099210783" class="btn btn-primary">Invite Helios</a>
                     <a href="https://discord.gg/5dGWwdHa3e" class="btn btn-secondary">Join Community</a>
                 </div>
             </div>
@@ -72,66 +71,29 @@
         <section class="network-section" id="network">
             <h2 class="section-title">A <span>Global Network</span> of Servers</h2>
             <div class="network-viz">
-                <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;">
+                <svg viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet">
                     <defs>
                         <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                             <polygon points="0 0, 10 3, 0 6" fill="rgba(38,244,223,0.6)" />
                         </marker>
                         <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:rgba(38,244,223,0.4);stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:rgba(0,255,163,0.4);stop-opacity:1" />
+                            <stop offset="0%" style="stop-color:rgba(38,244,223,0.4)" />
+                            <stop offset="100%" style="stop-color:rgba(0,255,163,0.4)" />
                         </linearGradient>
                     </defs>
-
-                    <line x1="100" y1="250" x2="900" y2="250" stroke="url(#flowGradient)" stroke-width="3"
-                        stroke-dasharray="10,5" marker-end="url(#arrowhead)">
+                    <line x1="100" y1="200" x2="900" y2="200" stroke="url(#flowGradient)" stroke-width="3" stroke-dasharray="10,5" marker-end="url(#arrowhead)">
                         <animate attributeName="stroke-dashoffset" from="0" to="-15" dur="2s" repeatCount="indefinite" />
                     </line>
-
-                    <g class="server-node">
-                        <circle cx="100" cy="250" r="50" fill="rgba(38,244,223,0.85)" />
-                        <circle cx="100" cy="250" r="45" fill="none" stroke="rgba(38,244,223,0.4)" stroke-width="2" />
-                        <text x="100" y="270" text-anchor="middle" fill="#0a0e27" font-size="36" font-weight="bold">👤</text>
-                    </g>
-                    <text x="100" y="320" text-anchor="middle" fill="#26f4df" font-size="13" font-weight="600">User Input</text>
-
-                    <g class="server-node">
-                        <circle cx="300" cy="250" r="50" fill="rgba(38,244,223,0.8)" />
-                        <circle cx="300" cy="250" r="45" fill="none" stroke="rgba(38,244,223,0.4)" stroke-width="2" />
-                        <text x="300" y="270" text-anchor="middle" fill="#0a0e27" font-size="36" font-weight="bold">⚙️</text>
-                    </g>
-                    <text x="300" y="320" text-anchor="middle" fill="#26f4df" font-size="13" font-weight="600">Processing</text>
-
-                    <g class="server-node">
-                        <circle cx="500" cy="250" r="50" fill="rgba(0,255,163,0.8)" />
-                        <circle cx="500" cy="250" r="45" fill="none" stroke="rgba(0,255,163,0.4)" stroke-width="2" />
-                        <text x="500" y="270" text-anchor="middle" fill="#0a0e27" font-size="36" font-weight="bold">💾</text>
-                    </g>
-                    <text x="500" y="320" text-anchor="middle" fill="#00ffa3" font-size="13" font-weight="600">Database</text>
-
-                    <g class="server-node">
-                        <circle cx="700" cy="250" r="50" fill="rgba(29,217,196,0.8)" />
-                        <circle cx="700" cy="250" r="45" fill="none" stroke="rgba(29,217,196,0.4)" stroke-width="2" />
-                        <text x="700" y="270" text-anchor="middle" fill="#0a0e27" font-size="36" font-weight="bold">📤</text>
-                    </g>
-                    <text x="700" y="320" text-anchor="middle" fill="#1dd9c4" font-size="13" font-weight="600">Send Processing</text>
-
-                    <g class="server-node">
-                        <circle cx="900" cy="250" r="50" fill="rgba(38,244,223,0.85)" />
-                        <circle cx="900" cy="250" r="45" fill="none" stroke="rgba(38,244,223,0.4)" stroke-width="2" />
-                        <text x="900" y="270" text-anchor="middle" fill="#0a0e27" font-size="36" font-weight="bold">💬</text>
-                    </g>
-                    <text x="900" y="320" text-anchor="middle" fill="#26f4df" font-size="13" font-weight="600">Global Chat</text>
-
-                    <style>
-                        @keyframes nodePulse {
-                            0%, 100% { opacity: 1; }
-                            50% { opacity: 0.7; }
-                        }
-                        circle[fill*="rgba"] {
-                            animation: nodePulse 3s ease-in-out infinite;
-                        }
-                    </style>
+                    <g class="server-node"><circle cx="100" cy="200" r="45" fill="rgba(38,244,223,0.85)" /><text x="100" y="212" text-anchor="middle" fill="#0a0e27" font-size="32" font-weight="bold">&#x1F464;</text></g>
+                    <text x="100" y="265" text-anchor="middle" fill="#26f4df" font-size="13" font-weight="600">User Input</text>
+                    <g class="server-node"><circle cx="300" cy="200" r="45" fill="rgba(38,244,223,0.8)" /><text x="300" y="212" text-anchor="middle" fill="#0a0e27" font-size="32" font-weight="bold">&#x2699;&#xFE0F;</text></g>
+                    <text x="300" y="265" text-anchor="middle" fill="#26f4df" font-size="13" font-weight="600">Processing</text>
+                    <g class="server-node"><circle cx="500" cy="200" r="45" fill="rgba(0,255,163,0.8)" /><text x="500" y="212" text-anchor="middle" fill="#0a0e27" font-size="32" font-weight="bold">&#x1F4BE;</text></g>
+                    <text x="500" y="265" text-anchor="middle" fill="#00ffa3" font-size="13" font-weight="600">Database</text>
+                    <g class="server-node"><circle cx="700" cy="200" r="45" fill="rgba(29,217,196,0.8)" /><text x="700" y="212" text-anchor="middle" fill="#0a0e27" font-size="32" font-weight="bold">&#x1F4E4;</text></g>
+                    <text x="700" y="265" text-anchor="middle" fill="#1dd9c4" font-size="13" font-weight="600">Send Processing</text>
+                    <g class="server-node"><circle cx="900" cy="200" r="45" fill="rgba(38,244,223,0.85)" /><text x="900" y="212" text-anchor="middle" fill="#0a0e27" font-size="32" font-weight="bold">&#x1F4AC;</text></g>
+                    <text x="900" y="265" text-anchor="middle" fill="#26f4df" font-size="13" font-weight="600">Global Chat</text>
                 </svg>
             </div>
         </section>
@@ -140,36 +102,12 @@
         <section class="features" id="features">
             <h2 class="section-title">Powerful <span>Features</span></h2>
             <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
-                    <h3>Global Broadcasting</h3>
-                    <p>Send messages to all connected servers simultaneously. Reach your entire community network with one message.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚙️</div>
-                    <h3>Full Customization</h3>
-                    <p>Configure which channels participate, set notification preferences, and control your server's visibility.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Network Statistics</h3>
-                    <p>Track your Global Chat activity with detailed stats. See your impact across the network.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">👤</div>
-                    <h3>User Profiles</h3>
-                    <p>View detailed Global Chat profiles. Track reputation and activity across the connected community.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Safe & Moderated</h3>
-                    <p>Built with security first. All messages are logged and moderated to maintain community standards.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Real-Time Sync</h3>
-                    <p>Messages broadcast instantly across all participating servers. No delays, no limitations.</p>
-                </div>
+                <div class="feature-card"><div class="feature-icon">&#x1F30D;</div><h3>Global Broadcasting</h3><p>Send messages to all connected servers simultaneously. Reach your entire community network with one message.</p></div>
+                <div class="feature-card"><div class="feature-icon">&#x2699;&#xFE0F;</div><h3>Full Customization</h3><p>Configure which channels participate, set notification preferences, and control your server's visibility.</p></div>
+                <div class="feature-card"><div class="feature-icon">&#x1F4CA;</div><h3>Network Statistics</h3><p>Track your Global Chat activity with detailed stats. See your impact across the network.</p></div>
+                <div class="feature-card"><div class="feature-icon">&#x1F464;</div><h3>User Profiles</h3><p>View detailed Global Chat profiles. Track reputation and activity across the connected community.</p></div>
+                <div class="feature-card"><div class="feature-icon">&#x1F512;</div><h3>Safe &amp; Moderated</h3><p>Built with security first. All messages are logged and moderated to maintain community standards.</p></div>
+                <div class="feature-card"><div class="feature-icon">&#x26A1;</div><h3>Real-Time Sync</h3><p>Messages broadcast instantly across all participating servers. No delays, no limitations.</p></div>
             </div>
         </section>
 
@@ -177,83 +115,40 @@
         <section class="stats">
             <div class="stats-header">
                 <h2 class="section-title">Network <span>Statistics</span></h2>
-                <div class="stats-meta">
-                    <span id="last-update" class="last-update">Loading...</span>
-                </div>
+                <span id="last-update" class="last-update">Loading...</span>
             </div>
             <div class="stats-container">
-                <div class="stat">
-                    <div class="stat-icon" id="stat-online-icon">●</div>
-                    <div id="stat-online" class="stat-number">loading...</div>
-                    <div class="stat-label">Bot Status</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-icon">🚀</div>
-                    <div id="stat-servers" class="stat-number">loading...</div>
-                    <div class="stat-label">Active Servers</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-icon">🌐</div>
-                    <div id="stat-guilds" class="stat-number">loading...</div>
-                    <div class="stat-label">Total Servers</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-icon">👥</div>
-                    <div id="stat-users" class="stat-number">loading...</div>
-                    <div class="stat-label">Total Users</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-icon">💬</div>
-                    <div id="stat-messages" class="stat-number">loading...</div>
-                    <div class="stat-label">Messages Bridged</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-icon">⏱️</div>
-                    <div id="stat-uptime" class="stat-number">loading...</div>
-                    <div class="stat-label">Uptime</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-icon">⚙️</div>
-                    <div id="stat-commands" class="stat-number">loading...</div>
-                    <div class="stat-label">Commands</div>
-                </div>
+                <div class="stat"><div class="stat-icon" id="stat-online-icon">&#x25CF;</div><div id="stat-online" class="stat-number">loading...</div><div class="stat-label">Bot Status</div></div>
+                <div class="stat"><div class="stat-icon">&#x1F680;</div><div id="stat-servers" class="stat-number">loading...</div><div class="stat-label">Active Servers</div></div>
+                <div class="stat"><div class="stat-icon">&#x1F310;</div><div id="stat-guilds" class="stat-number">loading...</div><div class="stat-label">Total Servers</div></div>
+                <div class="stat"><div class="stat-icon">&#x1F465;</div><div id="stat-users" class="stat-number">loading...</div><div class="stat-label">Total Users</div></div>
+                <div class="stat"><div class="stat-icon">&#x1F4AC;</div><div id="stat-messages" class="stat-number">loading...</div><div class="stat-label">Messages Bridged</div></div>
+                <div class="stat"><div class="stat-icon">&#x23F1;&#xFE0F;</div><div id="stat-uptime" class="stat-number">loading...</div><div class="stat-label">Uptime</div></div>
+                <div class="stat"><div class="stat-icon">&#x2699;&#xFE0F;</div><div id="stat-commands" class="stat-number">loading...</div><div class="stat-label">Commands</div></div>
             </div>
         </section>
 
         <!-- Commands -->
         <section class="commands" id="commands">
-            <h2 class="section-title">Quick <span>Commands</span></h2>
-            <div class="command-card">
-                <div class="command-name">/gc config</div>
-                <div class="command-desc">Enable, disable & configure Global Chat features. Set which channel participate in the global network to match your server.</div>
-            </div>
-            <div class="command-card">
-                <div class="command-name">/gc setup</div>
-                <div class="command-desc">Manage your personal Global Chat settings. Control notifications.</div>
-            </div>
-            <div class="command-card">
-                <div class="command-name">/gc stats</div>
-                <div class="command-desc">View comprehensive Global Chat network statistics. See server counts, active users, message volume, and contribution.</div>
-            </div>
-            <div class="command-card">
-                <div class="command-name">/gc profile</div>
-                <div class="command-desc">View a user's Global Chat profile card. Check reputation, activity, and contribution history across the entire network.</div>
-            </div>
-            <div class="command-card">
-                <div class="command-name">/help</div>
-                <div class="command-desc">To explore the rest of the Bot.</div>
-            </div>
+            <h2 class="section-title">All <span>Commands</span></h2>
+            <p class="commands-subtitle" id="commands-status">Loading commands from Helios...</p>
+            <div class="command-filters" id="command-filters"></div>
+            <div id="commands-list"></div>
         </section>
 
         <!-- Footer -->
         <footer>
-            <div class="footer-links">
-                <a href="https://discord.com/oauth2/authorize?client_id=1041755897099210783">🤖 Invite Bot</a>
-                <a href="https://discord.gg/5dGWwdHa3e">💬 Community</a>
-                <a href="https://discord.gg/5dGWwdHa3e">🐛 Support</a>
-            </div>
-            <div class="footer-text">
-                <p>Helios Global Chat © <span id="data-year"></span> • Connecting communities, one message at a time</p>
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <img src="icon.png" alt="Helios" class="footer-logo">
+                    <span class="logo-text" style="font-size:1.1rem">HELIOS</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://discord.com/oauth2/authorize?client_id=1041755897099210783">Invite Bot</a>
+                    <a href="https://discord.gg/5dGWwdHa3e">Community</a>
+                    <a href="https://discord.gg/5dGWwdHa3e">Support</a>
+                </div>
+                <p class="footer-text">Helios Global Chat &copy; <span id="data-year"></span> &mdash; Connecting communities, one message at a time</p>
             </div>
         </footer>
     </div>
